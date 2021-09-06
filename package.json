@@ -1,0 +1,23 @@
+{
+  "name": "xminds-sdk-js",
+  "version": "1.0.0",
+  "description": "Javascript client for Crossing Minds B2B API",
+  "main": "lib/ApiClient.js",
+  "scripts": {
+    "build": "webpack --mode production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.crossingminds.org:opensource/xminds-javascript.git"
+  },
+  "author": "Julio Briceno",
+  "license": "MIT",
+  "dependencies": {
+    "node-fetch": "^3.0.0",
+    "querystring": "^0.2.0",
+    "webpack": "^5.52.0",
+    "webpack-cli": "^4.8.0"
+  },
+  "devDependencies": {}
+}
