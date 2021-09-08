@@ -37,7 +37,7 @@ const { ApiClient } = require("./lib/ApiClient.js");
 **In Browser**
 
 ```js
-import { ApiClient } from "./lib/ApiClient.js";
+import {ApiClient} from "xminds-sdk-js";
 ```
 
 ## Examples
