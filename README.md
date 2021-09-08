@@ -31,7 +31,7 @@ npm run build
 **In Node.js**
 
 ```js
-const { ApiClient } = require("./lib/ApiClient.js");
+const { ApiClient } = require("xminds-sdk-js");
 ```
 
 **In Browser**
