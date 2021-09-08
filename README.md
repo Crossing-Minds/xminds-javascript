@@ -1,6 +1,6 @@
 # Xminds Javascript SDK
 
-The JS Xminds SDK is a lightweight library that allows you to integrate Crossing Minds into your website. 
+The JS Xminds SDK is a lightweight library that allows you to integrate Crossing Minds into your website using a `refresh_token`. 
 
 It is based on the Crossing Minds B2B API and provides the ability to fetch recommendations, items/users and create interactions.
 
