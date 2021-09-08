@@ -12,7 +12,7 @@ With NPM:
 npm install xminds-js-sdk
 ```
 
-## Build
+## Compile
 ```
 npm run build
 ```
