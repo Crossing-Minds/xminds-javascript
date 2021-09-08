@@ -44,7 +44,7 @@ import { ApiClient } from "./lib/ApiClient.js";
 
 **Initializing the client**
 ```js
-import { ApiClient } from "./lib/ApiClient.js";
+import {ApiClient} from "xminds-sdk-js";
 
 // Initialize the client instance
 // if it is None it will use production host
