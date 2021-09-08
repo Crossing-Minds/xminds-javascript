@@ -19,13 +19,17 @@ npm run build
 
 ## Usage
 
-**From node**
+**In Node.js**
+
+```js
+const { ApiClient } = require("./lib/ApiClient.js");
+```
+
+**In Browser**
 
 ```js
 import { ApiClient } from "./lib/ApiClient.js";
 ```
-
-**From browser**
 
 ```js
 <script src="./dist/xminds-sdk.js" type="text/javascript"></script>
