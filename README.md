@@ -51,7 +51,9 @@ import { ApiClient } from "./lib/ApiClient.js";
 import { ApiClient } from "./lib/ApiClient.js";
 
 // Initialize the client instance
-var api = new ApiClient(REFRESH_TOKEN, HOST)
+const host = "https://staging-api.crossingminds.com";
+const refreshToken = "/lDHAxJIFwGg02B3Z8m1XA/RtqgoZczWUCeo93UsZceS/kmJfe8p++50hOBJnyaqjrU8pPGmFmCvSxk6JPdxTg=="; // comes from the backend, and is linked to db_id and userId
+const client = new ApiClient(refreshToken, host);
 ```
 **_REFRESH_TOKEN_** = "wUiVkYKGssmYnoH7C1ydxnrcML1T/6e2ip3YMCHagtxPJa1xARva0f4am2fo3aixo0+cd4+dIivIURMZzfvcRg=="
 
