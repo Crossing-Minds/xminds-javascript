@@ -2,7 +2,16 @@
 
 The JS Xminds SDK is a lightweight library that allows you to integrate Crossing Minds into your website using a `refresh_token`. 
 
-It is based on the Crossing Minds B2B API and provides the ability to fetch recommendations, items/users and create interactions.
+It is based on the Crossing Minds B2B API and will have access to the three types of recommendation endpoints:
+- profile-to-items recommendations (requires user_id)
+- session-to-items recommendations (does not require user_id)
+- item-to-items recommendations (does not require user_id)
+
+
+As well as managing user/item ratings or interactions, such as:
+- create new interaction e.g. add one purchase (requires user_id)
+- get items and users
+
 
 
 ## Installation
