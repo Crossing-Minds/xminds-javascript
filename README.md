@@ -61,12 +61,14 @@ const client = new ApiClient(refreshToken, userAgent, host);
 
 **Fetching recommendations**
 ```js
+// 1.- Get Profile-Based Items Recommendations
+
 // Params
 const amt = 5
 const filters = [
     { "property_name": "year", "op": "gt", "value": 2000 }
 ];
-// Get items recommendations given a user ID.
+// a) Get items recommendations given a user ID.
 client.getRecommendationsUserToItems("192251", amt, null, filters, false)
     .then(data => {
         console.log(data);
@@ -74,6 +76,63 @@ client.getRecommendationsUserToItems("192251", amt, null, filters, false)
     .catch(err => {
         console.log(err);
     });
+
+
+// 2.- Get Session-Based Items Recommendations
+// ***** Ratings and Interactions are mutually exclusive *****
+
+// Params
+const amt = 10
+const cursor = null
+const filters = [
+    {"property_name": "tags", "op": "in", "value": ["family", "fiction"]},
+    {"property_name": "poster", "op": "notempty"},
+]
+const user_properties = { "age": 25 }
+const excludeRatedItems = undefined // enable default value (false)
+const reranking = null
+const scenario = null
+const skipDefaultScenario = undefined // enable default value (false)
+
+    // a) Example with Interactions
+    const ratings = null
+    const interactions = [
+        {
+            "item_id": "123e4567-e89b-12d3-a456-426614174000",
+            "interaction_type": "like",
+            "timestamp": 1632759339.123
+        },
+        {
+            "item_id": "c3391d83-553b-40e7-818e-fcf658ec397d",
+            "interaction_type": "dislike",
+            "timestamp": 1632759339.123
+        }
+    ]
+    // Get items recommendations given the ratings or interactions of an anonymous session.
+    client.getRecommendationsSessionToItems(amt, cursor, filters, ratings, userProperties, 
+        excludeRatedItems, interactions, reranking, scenario, skipDefaultScenario)
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
+
+    // b) Example with Ratings
+    const interactions = null
+    const ratings = "ratings": [
+        {"item_id": "123e4567-e89b-12d3-a456-426614174000", "rating": 8.5},
+        {"item_id": "c3391d83-553b-40e7-818e-fcf658ec397d", "rating": 2.0}
+    ]
+    // Get items recommendations given the ratings or interactions of an anonymous session.
+    client.getRecommendationsSessionToItems(amt, cursor, filters, ratings, userProperties, 
+        excludeRatedItems, interactions, reranking, scenario, skipDefaultScenario)
+        .then(data => {
+            console.log(data);
+        })
+        .catch(err => {
+            console.log(err);
+        });
 ```
 
 **Fetching users**
@@ -118,10 +177,28 @@ client.listItems(itemsId)
     });
 ```
 
-**Creating interaction**
+**Creating interactions**
 ```js
 // Create a new interaction for a user and an item
-client.createInteraction("192251", "031242227X", "ProductAction/ADD_TO_CART", null)
+const userId = "192251"
+const itemId = "031242227X"
+const interactionType = "ProductAction/ADD_TO_CART"
+client.createInteraction(userId, itemId, interactionType, null)
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+// Create or update large bulks of interactions for a user and many items
+const userId = "192251"
+const interactions = [
+    {"item_id": "123e4567-e89b-12d3-a456-426614174000", "interaction_type": "productView", "timestamp": 1588812345},
+    {"item_id": "c3391d83-553b-40e7-818e-fcf658ec397d", "interaction_type": "productView", "timestamp": 1588854321},
+    {"item_id": "c3391d83-553b-40e7-818e-fcf658ec397d", "interaction_type": "addToCart", "timestamp": 1588866349}
+]
+client.createOrUpdateUserInteractionsBulk(userId, interactions)
     .then(data => {
         console.log(data);
     })
