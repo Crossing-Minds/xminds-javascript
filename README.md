@@ -134,6 +134,37 @@ client.getRecommendationsSessionToItems(opts)
     .catch(err => {
         console.log(err);
     });
+
+
+// 3.- Get Precomputed Recommendations
+
+// a) Get Precomputed Similar Items Recommendations (using a table)
+const recoOpts = {
+        table: 'example_table_xminds_item_items.dat'
+    }
+cons itemId = '1'
+
+client.getPrecomputedRecommendationsItemToItems(itemId, recoOpts)
+    .then(data => {
+        console.log(data)
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+// b) Get Precomputed Profile-Based Items Recommendations (using a scenario)
+const recoOpts = {
+        scenario: 'example_scenario_xminds_user_items'
+    }
+cons userId = '100'
+
+client.getPrecomputedRecommendationsUserToItems(userId, recoOpts)
+    .then(data => {
+        console.log(data)
+    })
+    .catch(err => {
+        console.log(err);
+    });
 ```
 
 **Fetching users**
