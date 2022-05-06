@@ -27,39 +27,26 @@ npm install xminds-sdk-js
 npm run build
 ```
 
-## Usage
-
-**In Node.js**
-
-```js
-const { ApiClient } = require("xminds-sdk-js");
-```
-
-**In Browser**
-
-```js
-import { ApiClient } from "xminds-sdk-js";
-```
-
-## Examples
+## Usage Examples
 
 **Initializing the client**
 
 ```js
-import { ApiClient } from "xminds-sdk-nodejs";
+import { ApiClient } from "xminds-sdk-js";
 
 // Optional parameters
 const opts = {
-  host: "https://staging-api.crossingminds.com",
-  userAgent: "CUSTOM_USER_AGENT", // To identify the origin of the requests. e.g.: 'Shopify/SHOP_NAME'
-  refreshToken:
-    "wUiVkYKGssmYnoH7C1ydxnrcML1T/6e2ip3YMCHagtxPJa1xARva0f4am2fo3aixo0+cd4+dIivIURMZzfvcRg==", // comes from the backend, and is linked to db_id and userId. If it is null it will use production host
-};
+  host: "https://api.crossingminds.com", // If null or not present, it will use this host by default
+  userAgent: "CUSTOM_USER_AGENT", // To identify the origin of the requests. e.g.: 'Shopify/SHOP_NAME'. Default: empty value
+  refreshToken: "wUiVkYKGssmYnoH7C1ydxnrcML1T/6e2ip3YMCHagtxPJa1xARva0f4am2fo3aixo0+cd4+dIivIURMZzfvcRg==" // comes from the backend, and is linked to db_id and user_id
+}
 
 // Initialize the client instance
 const client = new ApiClient(opts);
-// const client = new ApiClient(); // Default
+// const client = new ApiClient(); // Initialize the client using default values.
 ```
+**Note**: When using default initialization, it is necessary to do the **loginRefreshToken** before making API calls.
+
 
 **Fetching recommendations**
 
@@ -143,6 +130,37 @@ const opts = {
 client.getRecommendationsSessionToItems(opts)
     .then(data => {
         console.log(data);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+
+// 3.- Get Precomputed Recommendations
+
+// a) Get Precomputed Similar Items Recommendations (using a table)
+const recoOpts = {
+        table: 'example_table_xminds_item_items.dat'
+    }
+cons itemId = '1'
+
+client.getPrecomputedRecommendationsItemToItems(itemId, recoOpts)
+    .then(data => {
+        console.log(data)
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+// b) Get Precomputed Profile-Based Items Recommendations (using a scenario)
+const recoOpts = {
+        scenario: 'example_scenario_xminds_user_items'
+    }
+cons userId = '100'
+
+client.getPrecomputedRecommendationsUserToItems(userId, recoOpts)
+    .then(data => {
+        console.log(data)
     })
     .catch(err => {
         console.log(err);
