@@ -38,15 +38,16 @@ import { ApiClient } from "xminds-sdk-js";
 const opts = {
   host: "https://api.crossingminds.com", // If null or not present, it will use this host by default
   userAgent: "CUSTOM_USER_AGENT", // To identify the origin of the requests. e.g.: 'Shopify/SHOP_NAME'. Default: empty value
-  refreshToken: "wUiVkYKGssmYnoH7C1ydxnrcML1T/6e2ip3YMCHagtxPJa1xARva0f4am2fo3aixo0+cd4+dIivIURMZzfvcRg==" // comes from the backend, and is linked to db_id and user_id
-}
+  refreshToken:
+    "wUiVkYKGssmYnoH7C1ydxnrcML1T/6e2ip3YMCHagtxPJa1xARva0f4am2fo3aixo0+cd4+dIivIURMZzfvcRg==", // comes from the backend, and is linked to db_id and user_id
+};
 
 // Initialize the client instance
 const client = new ApiClient(opts);
 // const client = new ApiClient(); // Initialize the client using default values.
 ```
-**Note**: When using default initialization, it is necessary to do the **loginRefreshToken** before making API calls.
 
+**Note**: When using default initialization, it is necessary to do the **loginRefreshToken** before making API calls.
 
 **Fetching recommendations**
 
@@ -127,6 +128,33 @@ const opts = {
 }
 
 // Get items recommendations given the ratings or interactions of an anonymous session.
+client.getRecommendationsSessionToItems(opts)
+    .then(data => {
+        console.log(data);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
+
+// c) Example with session Id
+
+// Optional parameters
+const opts = {
+    amt: 10,
+    filters: [
+        {"property_name": "tags", "op": "in", "value": ["family", "fiction"]},
+        {"property_name": "poster", "op": "notempty"},
+    ],
+    user_properties: { "age": 25 },
+    ratings: [
+        {"item_id": "123e4567-e89b-12d3-a456-426614174000", "rating": 8.5},
+        {"item_id": "c3391d83-553b-40e7-818e-fcf658ec397d", "rating": 2.0}
+    ],
+    session_id: "c2a73584-bbd0-4f04-b497-26bf70152932"
+}
+
+// Get items recommendations given the ratings for a specific session.
 client.getRecommendationsSessionToItems(opts)
     .then(data => {
         console.log(data);
@@ -252,6 +280,85 @@ const interactions = [
 ];
 client
   .createOrUpdateUserInteractionsBulk(userId, interactions)
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// Examples for Anonymous Session Interactions
+
+// Create a new interaction for an anonymous session and an item
+const sessionId = "1234";
+const itemId = "c3391d83-553b-40e7-818e-fcf658ec397d";
+const interactionType = "productView";
+const timestamp = 1588812345;
+client
+  .createAnonymousSessionInteraction(
+    sessionId,
+    itemId,
+    interactionType,
+    timestamp
+  )
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// Create large bulks of interactions for an anonymous session and many items
+const sessionId = "1234";
+const interactions = [
+  {
+    item_id: "123e4567-e89b-12d3-a456-426614174000",
+    interaction_type: "productView",
+    timestamp: 1588812345,
+  },
+  {
+    item_id: "c3391d83-553b-40e7-818e-fcf658ec397d",
+    interaction_type: "productView",
+    timestamp: 1588854321,
+  },
+  {
+    item_id: "c3391d83-553b-40e7-818e-fcf658ec397d",
+    interaction_type: "addToCart",
+    timestamp: 1588866349,
+  },
+];
+client
+  .createAnonymousSessionInteractionsBulk(sessionId, interactions)
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// Create large bulks of interactions for many anonymous sessions and many items.
+const interactions = [
+  {
+    session_id: 1234,
+    item_id: "123e4567-e89b-12d3-a456-426614174000",
+    interaction_type: "productView",
+    timestamp: 1588812345,
+  },
+  {
+    session_id: 1234,
+    item_id: "c3391d83-553b-40e7-818e-fcf658ec397d",
+    interaction_type: "productView",
+    timestamp: 1588854321,
+  },
+  {
+    session_id: 333,
+    item_id: "c3391d83-553b-40e7-818e-fcf658ec397d",
+    interaction_type: "addToCart",
+    timestamp: 1588811111,
+  },
+];
+client
+  .createAnonymousSessionsInteractionsBulk(interactions)
   .then((data) => {
     console.log(data);
   })
